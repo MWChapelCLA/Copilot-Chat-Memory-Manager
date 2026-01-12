@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  vscode-extension-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chat-memory-dev
+    volumes:
+      - .:/workspace
+      - vscode-extensions:/root/.vscode-server/extensions
+      - vscode-server:/root/.vscode-server
+    working_dir: /workspace
+    command: sleep infinity
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+
+volumes:
+  vscode-extensions:
+  vscode-server:
