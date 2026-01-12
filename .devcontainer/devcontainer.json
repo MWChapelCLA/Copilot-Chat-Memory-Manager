@@ -1,0 +1,42 @@
+{
+    "name": "Chat Memory Manager Extension Dev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "vscode-extension-dev",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "ms-vscode.vscode-typescript-next",
+                "github.copilot",
+                "github.copilot-chat"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.eslint": "explicit"
+                },
+                "typescript.tsdk": "node_modules/typescript/lib",
+                "typescript.enablePromptUseWorkspaceTsdk": true
+            }
+        }
+    },
+    "postCreateCommand": "npm install && npm run compile",
+    "remoteUser": "vscode",
+    "forwardPorts": [
+        3000,
+        9233
+    ],
+    "portsAttributes": {
+        "9233": {
+            "label": "Node Debug Port"
+        }
+    },
+    "postAttachCommand": {
+        "server": "echo 'Container is ready! Run npm run watch to start development.'"
+    },
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind,consistency=cached"
+    ]
+}

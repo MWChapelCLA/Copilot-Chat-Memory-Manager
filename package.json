@@ -1,0 +1,118 @@
+{
+  "name": "chat-memory-manager",
+  "displayName": "Chat Memory Manager",
+  "description": "Store repository context and persist GitHub Copilot chat sessions with file-based storage",
+  "version": "0.0.1",
+  "author": "Michael Chapel",
+  "publisher": "chat-memory",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MWChapelCLA/Copilot-Chat-Memory-Manager"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "chat-memory.memory",
+        "name": "memory",
+        "description": "Memory assistant for GitHub Copilot - save and restore chat sessions, maintain repository context",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "save",
+            "description": "Save the current chat session for later reference"
+          },
+          {
+            "name": "restore",
+            "description": "List and restore previously saved chat sessions"
+          },
+          {
+            "name": "context",
+            "description": "Save current repository context and structure"
+          },
+          {
+            "name": "sessions",
+            "description": "View statistics about saved sessions"
+          },
+          {
+            "name": "stats",
+            "description": "Show detailed statistics and available commands"
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "chat-memory-manager.saveChatSession",
+        "title": "Chat Memory: Save Current Chat Session"
+      },
+      {
+        "command": "chat-memory-manager.restoreChatSession",
+        "title": "Chat Memory: Restore Chat Session"
+      },
+      {
+        "command": "chat-memory-manager.saveRepoContext",
+        "title": "Chat Memory: Save Repository Context"
+      },
+      {
+        "command": "chat-memory-manager.viewSessions",
+        "title": "Chat Memory: View Saved Sessions"
+      }
+    ],
+    "configuration": {
+      "title": "Chat Memory Manager",
+      "properties": {
+        "chatMemoryManager.autoSaveSessions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically save chat sessions when they are closed"
+        },
+        "chatMemoryManager.autoSaveInterval": {
+          "type": "number",
+          "default": 300000,
+          "description": "Auto-save interval in milliseconds (default: 5 minutes)"
+        },
+        "chatMemoryManager.storageLocation": {
+          "type": "string",
+          "default": "",
+          "description": "Custom storage location for chat sessions and context (leave empty for default)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^8.54.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "typescript": "^5.3.2"
+  }
+}
